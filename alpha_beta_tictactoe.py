@@ -90,7 +90,7 @@ def getScore(board_state):
         return -10
     return 0
 
-def abminimax(board_state, depth, alpha, beta, player):
+def alphabetaMinMaxPruning(board_state, depth, alpha, beta, player):
     row = -1
     col = -1
     if depth == 0 or gameWon(board_state):
@@ -99,7 +99,7 @@ def abminimax(board_state, depth, alpha, beta, player):
     else:
         for cell in blanks(board_state):
             setMove(board_state, cell[0], cell[1], player)
-            score = abminimax(board_state, depth - 1, alpha, beta, -player)
+            score = alphabetaMinMaxPruning(board_state, depth - 1, alpha, beta, -player)
             if player == 1:
                 # X is always the max player
                 if score[2] > alpha:
@@ -132,7 +132,7 @@ def o_comp(board_state):
         printBoard(board_state)
 
     else:
-        result = abminimax(board_state, len(blanks(board_state)), -math.inf, math.inf, -1)
+        result = alphabetaMinMaxPruning(board_state, len(blanks(board_state)), -math.inf, math.inf, -1)
         setMove(board_state, result[0], result[1], -1)
         printBoard(board_state)
 
@@ -144,7 +144,7 @@ def x_comp(board_state):
         printBoard(board_state)
 
     else:
-        result = abminimax(board_state, len(blanks(board_state)), -math.inf, math.inf, 1)
+        result = alphabetaMinMaxPruning(board_state, len(blanks(board_state)), -math.inf, math.inf, 1)
         setMove(board_state, result[0], result[1], 1)
         printBoard(board_state)
 
